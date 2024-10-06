@@ -6,8 +6,8 @@ from PyPDF2 import PdfReader
 # Define the valid German characters (lowercase for case-insensitivity)
 VALID_CHARACTERS = set("einrtasdhucglmobfzwkpvüäößjxyq")
 
+#read the pdf
 def read_pdf(file_path):
-    """Read text from a PDF file."""
     text = ""
     with open(file_path, 'rb') as file:
         reader = PdfReader(file)
@@ -15,12 +15,12 @@ def read_pdf(file_path):
             text += page.extract_text() + " "  # Adding a space between pages
     return text
 
+# Filter the text to keep only valid German characters (case insensitive)
 def filter_text(text):
-    """Filter the text to keep only valid German characters (case insensitive)."""
     return ''.join(c for c in text if c in VALID_CHARACTERS)
 
+# Compute the transition matrix from the given sequence of characters.
 def compute_transition_matrix(sequence):
-    """Compute the transition matrix from the given sequence of characters."""
     states = sorted(set(sequence))
     n_states = len(states)
     transition_matrix = np.zeros((n_states, n_states))
@@ -31,13 +31,13 @@ def compute_transition_matrix(sequence):
 
     return transition_matrix, states
 
+# Compute the cumulative transition matrix from all PDF files in the folder.
 def compute_cumulative_transition_matrix(folder_path):
-    """Compute the cumulative transition matrix from all PDF files in the folder."""
     cumulative_transition_matrix = None
     all_states = None
 
     for filename in os.listdir(folder_path):
-        if filename.endswith('.pdf'):
+        if filename.endswith('.pdf'): #Ensure is pdf
             file_path = os.path.join(folder_path, filename)
             text = read_pdf(file_path)
             clean_text = filter_text(text.lower())

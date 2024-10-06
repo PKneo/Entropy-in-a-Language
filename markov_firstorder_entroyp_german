@@ -1,11 +1,11 @@
+# imports
 import numpy as np
 
+# Compute the entropy of a first-order Markov source
 def compute_entropy(transition_matrix, letter_probabilities):
-    """Compute the entropy of a first-order Markov source."""
     # Ensure the transition matrix is a numpy array
     transition_matrix = np.array(transition_matrix)
     
-    # Get the states (letters)
     states = transition_matrix.index.tolist()  # Assuming transition_matrix is a DataFrame
 
     # Initialize entropy
@@ -22,8 +22,7 @@ def compute_entropy(transition_matrix, letter_probabilities):
 
     return -entropy  # The entropy should be negative of the sum
 
-# Example usage of compute_entropy function
-# Assuming you have your transition matrix as transition_df and a dictionary of letter probabilities
+#Fixed probabilities given by wikipedia
 letter_probabilities = {
     'e': 0.1611,
     'n': 0.1033,
@@ -57,6 +56,5 @@ letter_probabilities = {
     'y': 0.0006
 }
 
-# Assuming transition_df is your transition DataFrame from the previous steps
 entropy_value = compute_entropy(transition_df, letter_probabilities)
 print(f"Entropy: {entropy_value:.4f} bits")
